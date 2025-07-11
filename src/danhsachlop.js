@@ -1,34 +1,35 @@
-import { useState } from "react";
+import {useState} from "react";
 
 export default function SchoolManager() {
     const [classes, setClasses] = useState([
-        { name: "12A01", teacher: "Cô Lan" },
-        { name: "12A02", teacher: "Thầy Minh" },
+        {name: "12A01", teacher: "Cô Lan"},
+        {name: "12A02", teacher: "Thầy Minh"},
     ]);
+    const originalList = [
+        {name: "Vũ Đình Duy Anh", age: 17, className: "12A01", score: 8.0},
+        {name: "Phạm Quốc Anh", age: 17, className: "12A01", score: 8.2},
+        {name: "Trần Quỳnh Anh", age: 17, className: "12A01", score: 9.1},
+        {name: "Nguyễn Thục Anh", age: 17, className: "12A01", score: 8.3},
+        {name: "Võ Quốc Bảo", age: 17, className: "12A01", score: 7.5},
+        {name: "Đỗ Nghi Bình", age: 17, className: "12A01", score: 8.7},
+        {name: "Nguyễn Trí Dũng", age: 17, className: "12A01", score: 7.8},
+        {name: "Nguyễn Tiến Đạt", age: 17, className: "12A01", score: 7.9},
+        {name: "Lê Nguyễn Khánh Giao", age: 17, className: "12A01", score: 9.0},
+        {name: "Lê Trần Gia Huy", age: 17, className: "12A01", score: 8.1},
 
-    const [students, setStudents] = useState([
-        { name: "Vũ Đình Duy Anh", age: 17, className: "12A01", score: 8.0 },
-        { name: "Phạm Quốc Anh", age: 17, className: "12A01", score: 8.2 },
-        { name: "Trần Quỳnh Anh", age: 17, className: "12A01", score: 9.1 },
-        { name: "Nguyễn Thục Anh", age: 17, className: "12A01", score: 8.3 },
-        { name: "Võ Quốc Bảo", age: 17, className: "12A01", score: 7.5 },
-        { name: "Đỗ Nghi Bình", age: 17, className: "12A01", score: 8.7 },
-        { name: "Nguyễn Trí Dũng", age: 17, className: "12A01", score: 7.8 },
-        { name: "Nguyễn Tiến Đạt", age: 17, className: "12A01", score: 7.9 },
-        { name: "Lê Nguyễn Khánh Giao", age: 17, className: "12A01", score: 9.0 },
-        { name: "Lê Trần Gia Huy", age: 17, className: "12A01", score: 8.1 },
+        {name: "Lê Trần Thùy An", age: 17, className: "12A02", score: 9.0},
+        {name: "Ngô Hoàng Anh", age: 17, className: "12A02", score: 8.2},
+        {name: "Đinh Gia Bảo", age: 17, className: "12A02", score: 8.0},
+        {name: "Mai Minh Bảo", age: 17, className: "12A02", score: 7.6},
+        {name: "Trần Trọng Dũng", age: 17, className: "12A02", score: 7.9},
+        {name: "Nguyễn Ngọc Hân", age: 17, className: "12A02", score: 8.5},
+        {name: "Phạm Nhật Hoàng", age: 17, className: "12A02", score: 7.7},
+        {name: "Trần Sĩ Hoàng", age: 17, className: "12A02", score: 8.4},
+        {name: "Lê Văn Dương Huy", age: 17, className: "12A02", score: 8.1},
+        {name: "Tường Phan Lê Khiêm", age: 17, className: "12A02", score: 8.3},
+    ];
+    const [students, setStudents] = useState([...originalList]);
 
-        { name: "Lê Trần Thùy An", age: 17, className: "12A02", score: 9.0 },
-        { name: "Ngô Hoàng Anh", age: 17, className: "12A02", score: 8.2 },
-        { name: "Đinh Gia Bảo", age: 17, className: "12A02", score: 8.0 },
-        { name: "Mai Minh Bảo", age: 17, className: "12A02", score: 7.6 },
-        { name: "Trần Trọng Dũng", age: 17, className: "12A02", score: 7.9 },
-        { name: "Nguyễn Ngọc Hân", age: 17, className: "12A02", score: 8.5 },
-        { name: "Phạm Nhật Hoàng", age: 17, className: "12A02", score: 7.7 },
-        { name: "Trần Sĩ Hoàng", age: 17, className: "12A02", score: 8.4 },
-        { name: "Lê Văn Dương Huy", age: 17, className: "12A02", score: 8.1 },
-        { name: "Tường Phan Lê Khiêm", age: 17, className: "12A02", score: 8.3 },
-    ]);
 
     const [className, setClassName] = useState("");
     const [teacher, setTeacher] = useState("");
@@ -42,7 +43,7 @@ export default function SchoolManager() {
 
     function addOrEditClass() {
         if (!className || !teacher) return alert("Vui lòng nhập đầy đủ lớp và giáo viên");
-        const newClass = { name: className, teacher };
+        const newClass = {name: className, teacher};
 
         if (editClassIndex !== null) {
             const updated = [...classes];
@@ -106,8 +107,16 @@ export default function SchoolManager() {
         setStudents(students.filter((_, i) => i !== index));
     }
 
+    function top3Student() {
+        let top3 = [...students];
+        top3.sort((a, b) => b.score - a.score)
+        setStudents(top3.slice(0, 3));
+    }
+    function cancelTop3() {
+        setStudents([...originalList]);
+    }
     return (
-        <div style={{ padding: "20px" }}>
+        <div style={{padding: "20px"}}>
             <h2>📚 Quản lý lớp học</h2>
             <input
                 placeholder="Tên lớp"
@@ -133,7 +142,7 @@ export default function SchoolManager() {
                 ))}
             </ul>
 
-            <hr />
+            <hr/>
 
             <h2>👨‍🎓 Quản lý học sinh</h2>
             <input
@@ -167,8 +176,10 @@ export default function SchoolManager() {
             <button onClick={addOrEditStudent}>
                 {editStudentIndex !== null ? "Cập nhật HS" : "Thêm HS"}
             </button>
+            <button onClick={top3Student}>Top 3 điểm cao nhất</button>
+            <button onClick={cancelTop3}>ALL</button>
 
-            <table border="1" cellPadding="5" style={{ borderCollapse: 'collapse', width: '100%', marginTop: 20 }}>
+            <table border="1" cellPadding="5" style={{borderCollapse: 'collapse', width: '100%', marginTop: 20}}>
                 <thead>
                 <tr>
                     <th>STT</th>
@@ -188,7 +199,8 @@ export default function SchoolManager() {
                         <td>{s.className}</td>
                         <td>{s.score}</td>
                         <td>
-                            <button onClick={() => editStudent(index)}>Sửa</button>{" "}
+                            <button onClick={() => editStudent(index)}>Sửa</button>
+                            {" "}
                             <button onClick={() => deleteStudent(index)}>Xóa</button>
                         </td>
                     </tr>
