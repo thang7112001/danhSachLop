@@ -115,6 +115,12 @@ export default function SchoolManager() {
     function cancelTop3() {
         setStudents([...originalList]);
     }
+    function findStudent() {
+        let find = students.filter(s =>
+            s.name.toLowerCase().includes(studentName.toLowerCase())&&
+            (studentClass === "" || s.className === studentClass));
+            setStudents(find);
+    }
     return (
         <div style={{padding: "20px"}}>
             <h2>📚 Quản lý lớp học</h2>
@@ -178,6 +184,7 @@ export default function SchoolManager() {
             </button>
             <button onClick={top3Student}>Top 3 điểm cao nhất</button>
             <button onClick={cancelTop3}>ALL</button>
+            <button onClick={findStudent}>Search</button>
 
             <table border="1" cellPadding="5" style={{borderCollapse: 'collapse', width: '100%', marginTop: 20}}>
                 <thead>
